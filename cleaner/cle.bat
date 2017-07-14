@@ -1,0 +1,1 @@
+for /D %%i in (C:\Users\u6039635\Documents\training-bot\cleaned_data\*) do clean %%i 0.45 C:\Users\u6039635\Documents\training-bot\downloaded
