@@ -2,7 +2,9 @@ import sys
 import os
 import getopt
 import subprocess
+import preparator
 from downloader import Downloader
+from recognizer import Recognizer
 
 train_rate = 0
 
@@ -37,7 +39,14 @@ print 'test set: ',  100 - train_rate
 with open(input_file) as f:
     content = f.readlines()
 
+preparator.empty_directory('./prepared')
+preparator.empty_directory('./cleaned_data')
+preparator.empty_directory('./downloaded')
+
 downloader = Downloader([x.strip() for x in content])
 downloader.recurring_retrieve()
 do_cluster()
+
+recognizer = Recognizer(train_rate)
+recognizer.prepare()
 
