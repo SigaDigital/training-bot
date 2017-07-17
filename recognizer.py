@@ -4,6 +4,7 @@ from shutil import copyfile, rmtree
 
 import os
 import random
+import subprocess
 
 class Recognizer:
     train_rate = 0
@@ -42,3 +43,35 @@ class Recognizer:
 
         for f in randomed_test:
             copyfile(f, abspath(self.prepare_output_path + name) + "/test/" + basename(f))
+        
+    def train(self, descriptor_path):
+        for dir_name in os.listdir("./prepared"):
+            if os.path.isdir("./prepared/" + dir_name):
+                self._training(dir_name, descriptor_path)            
+    
+    def _training(self, dir_name, descriptor_path):
+        self._classification(dir_name, descriptor_path)
+        if self._testing(dir_name, descriptor_path) < 0.8 :
+            self._training(dir_name, descriptor_path)        
+
+    def _classification(self, dir_name, descriptor_path):
+        FNULL = open(os.devnull, 'w') 
+        print "Training: " + dir_name
+        args = "./core/video-tagging.exe train \"" + dir_name + "\" \"" + os.path.abspath('./prepared/' + dir_name + '/train') + "\" \"" + descriptor_path + "\""
+        subprocess.call(args, stdout=FNULL, stderr=FNULL, shell=False)
+
+    def _testing(self, dir_name, descriptor_path):
+        true = 0.0
+        total = 0.0
+        FNULL = open(os.devnull, 'w') 
+        if os.path.isdir("./prepared/" + dir_name):
+            for file_name in os.listdir("./prepared/" + dir_name + "/test"):
+                total += 1
+                absolute_path = os.path.abspath("./prepared/" + dir_name + "/test/" + file_name)
+                output = subprocess.check_output(["./core/video-tagging.exe", "test", absolute_path, descriptor_path])
+                if dir_name == output:
+                    true += 1
+        return true / total
+
+
+                

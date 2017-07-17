@@ -30,10 +30,14 @@ preparator.empty_directory('./prepared')
 preparator.empty_directory('./cleaned_data')
 preparator.empty_directory('./downloaded')
 
+preparator.empty_directory('./core/Descriptor')
+preparator.empty_directory('./core/Descriptor/Faces')
+preparator.empty_directory('./core/Descriptor/Svms')
+
 if descriptor_clean_required is True:
-    preparator.empty_directory(descriptor_path)
-    preparator.empty_directory(descriptor_path + "/Faces")
-    preparator.empty_directory(descriptor_path + "/Svms")
+   preparator.empty_directory(descriptor_path)
+   preparator.empty_directory(descriptor_path + "/Faces")
+   preparator.empty_directory(descriptor_path + "/Svms")
 
 downloader = Downloader([x.strip() for x in content])
 downloader.recurring_retrieve()
@@ -41,4 +45,5 @@ downloader.do_cluster()
 
 recognizer = Recognizer(train_rate)
 recognizer.prepare()
+recognizer.train(descriptor_path)
 
