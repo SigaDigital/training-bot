@@ -1,20 +1,11 @@
 import sys
 import os
 import argparse
-import subprocess
 import preparator
 from downloader import Downloader
 from recognizer import Recognizer
 
-def do_cluster():
-    FNULL = open(os.devnull, 'w') 
-    for dir_name in os.listdir("./downloaded"):
-        if os.path.isdir("./downloaded/" + dir_name):
-            print "Clustering: " + dir_name
-            args = "./cleaner/clean.exe \"" + os.path.abspath('./downloaded/' + dir_name) + "\" 0.45 \"" + os.path.abspath("./cleaned_data") + "\""
-            subprocess.call(args, stdout=FNULL, stderr=FNULL, shell=False)
-
-parser = argparse.ArgumentParser(description='Process some integers.')
+parser = argparse.ArgumentParser(description='Proceed auto train video tagging')
 parser.add_argument('--file', '-f', help='name list input file path')
 parser.add_argument('--trainrate', '-t', help='specify training set rate', default = 80)
 parser.add_argument('--descriptor', '-d', help='specify descriptor path', default = os.path.abspath('./core/Descriptor'))
@@ -46,7 +37,7 @@ if descriptor_clean_required is True:
 
 downloader = Downloader([x.strip() for x in content])
 downloader.recurring_retrieve()
-do_cluster()
+downloader.do_cluster()
 
 recognizer = Recognizer(train_rate)
 recognizer.prepare()
