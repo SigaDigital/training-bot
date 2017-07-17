@@ -47,12 +47,16 @@ class Recognizer:
     def train(self, descriptor_path):
         for dir_name in os.listdir("./prepared"):
             if os.path.isdir("./prepared/" + dir_name):
-                self._training(dir_name, descriptor_path)            
-    
-    def _training(self, dir_name, descriptor_path):
-        self._classification(dir_name, descriptor_path)
-        if self._testing(dir_name, descriptor_path) < 0.8 :
-            self._training(dir_name, descriptor_path)        
+                 self._classification(dir_name, descriptor_path)
+        for dir_name in os.listdir("./prepared"):
+            if os.path.isdir("./prepared/" + dir_name):
+                test_rate = 0.0
+                while test_rate < 0.8:
+                    test_rate = self._testing(dir_name, descriptor_path)
+                    print str(test_rate)
+
+                    if test_rate < 0.8:
+                        self._classification(dir_name, descriptor_path)
 
     def _classification(self, dir_name, descriptor_path):
         FNULL = open(os.devnull, 'w') 
