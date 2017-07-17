@@ -30,14 +30,11 @@ class Downloader:
                         raise  
                     pass
             
-                j = 0
-                while j < len(['']):
-                    pure_keyword = self.keywords[j].replace(' ','%20')
-                    url = 'https://www.google.com/search?q=' + search + pure_keyword + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
-                    raw_html =  (self.download_page(url))
-                    time.sleep(0.1)
-                    items = items + (self._images_get_all_items(raw_html))
-                    j = j + 1
+                pure_keyword = self.keywords[i].replace(' ','+')
+                url = 'https://www.google.com/search?biw=1920&bih=925&site=webhp&tbm=isch&sa=1&q=' + pure_keyword + '&oq=' + pure_keyword + '&gs_l=psy-ab.3...3980.5259.0.5531.6.6.0.0.0.0.292.292.2-1.1.0....0...1.1.64.psy-ab..5.1.291...0.JAkssCU4amk'
+                raw_html =  (self.download_page(url))
+                time.sleep(0.1)
+                items = items + (self._images_get_all_items(raw_html))
                 print ("Total Image Links = " + str(len(items)))
                 print ("\n")
 
