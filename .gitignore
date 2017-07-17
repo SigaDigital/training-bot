@@ -3,3 +3,4 @@ downloaded/*
 prepared/*
 core/Descriptor/*
 name_list
+*.pyc
