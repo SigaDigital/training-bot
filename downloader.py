@@ -136,7 +136,7 @@ class Downloader:
         for dir_name in os.listdir("./downloaded"):
             if os.path.isdir("./downloaded/" + dir_name):
                 print "Clustering: " + dir_name
-                args = "./cleaner/clean.exe \"" + os.path.abspath('./downloaded/' + dir_name) + "\" 0.45 \"" + os.path.abspath("./cleaned_data") + "\""
+                args = "./cleaner/clean.exe \"" + os.path.abspath('./downloaded/' + dir_name) + "\" 0.4 \"" + os.path.abspath("./cleaned_data") + "\""
                 subprocess.call(args, stdout=FNULL, stderr=FNULL, shell=False)
 
 

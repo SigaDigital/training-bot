@@ -7,7 +7,7 @@ from recognizer import Recognizer
 
 parser = argparse.ArgumentParser(description='Proceed auto train video tagging')
 parser.add_argument('--file', '-f', help='name list input file path')
-parser.add_argument('--trainrate', '-t', help='specify training set rate', default = 80)
+parser.add_argument('--trainrate', '-t', help='specify training set rate', default = 100)
 parser.add_argument('--descriptor', '-d', help='specify descriptor path', default = os.path.abspath('./core/Descriptor'))
 parser.add_argument('--clean', help='clean descriptor before proceed', default = False, action='store_true')
 

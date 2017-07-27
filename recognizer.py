@@ -50,9 +50,12 @@ class Recognizer:
                  self._classification(dir_name, descriptor_path)
 
     def _classification(self, dir_name, descriptor_path):
+        nuValue = 0.00625
+        gammaValue = 0.00625
         FNULL = open(os.devnull, 'w') 
         print "Training: " + dir_name
-        args = "./core/video-tagging.exe train \"" + dir_name + "\" \"" + os.path.abspath('./prepared/' + dir_name + '/train') + "\" \"" + descriptor_path + "\""
+        args = "./core/video-tagging.exe train \"" + dir_name + "\" \"" + os.path.abspath('./prepared/' + dir_name + '/train') + "\" \"" \
+        + descriptor_path + "\" " + str(gammaValue) + " " + str(nuValue)
         subprocess.call(args, stdout=FNULL, stderr=FNULL, shell=False)
 
     def _testing(self, dir_name, descriptor_path):
